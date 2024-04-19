@@ -6,6 +6,11 @@ uint32_t gray_code(uint32_t n);
 
 int main(int argc, char **argv)
 {
+	if (argc != 2)
+	{
+		std::cout << "Error" << std::endl;
+		return 1;
+	}
 	int n = atoi(argv[1]);
 
 	int result = gray_code(n);

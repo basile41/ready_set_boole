@@ -98,7 +98,7 @@ bool eval_formula(const std::string &formula)
 	try
 	{
 		Ast ast(formula);
-		
+		ast.print();
 		return ast.eval();
 	}
 	catch(const std::exception& e)

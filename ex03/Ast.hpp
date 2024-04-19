@@ -12,8 +12,8 @@ public:
 
 	Ast(const std::string &formula);
 
-	
 	bool eval() const;
+	void print() const;
 private:
 	static AstNodePtr createOperator(char op, AstNodePtr left, AstNodePtr right = nullptr);
 	static AstNodePtr createValue(bool value);

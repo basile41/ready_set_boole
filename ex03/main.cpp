@@ -15,5 +15,5 @@ int main(int argc, char **argv)
 	
 	std::string formula(argv[1]);
 	bool result = eval_formula(formula);
-	std::cout << result << std::endl;
+	std::cout << "\nresult :" << result << std::endl;
 }

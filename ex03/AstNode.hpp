@@ -3,6 +3,8 @@
 #define ASTNODE_HPP
 
 #include <memory>
+#include <vector>
+#include <string>
 
 class AstNode
 {
@@ -12,6 +14,7 @@ public:
 
 	virtual ~AstNode() = default;
 	virtual bool eval() const = 0;
+	virtual std::vector<std::string> to_strings() const = 0;
 };
 
 class Negation : public AstNode
@@ -19,6 +22,7 @@ class Negation : public AstNode
 public:
 	Negation(AstNodePtr node);
 	bool eval() const override;
+	std::vector<std::string> to_strings() const override;
 private:
 	AstNodePtr _node;
 };
@@ -27,6 +31,7 @@ class BinaryOperator : public AstNode
 {
 public:
 	BinaryOperator(char op, AstNodePtr left, AstNodePtr right);
+	std::vector<std::string> to_strings() const override;
 protected:
 	char op;
 	AstNodePtr _left;
@@ -73,6 +78,7 @@ class Value : public AstNode
 public:
 	Value(bool value);
 	bool eval() const override;
+	std::vector<std::string> to_strings() const override;
 private:
 	bool value;
 };

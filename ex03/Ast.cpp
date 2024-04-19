@@ -1,6 +1,7 @@
 #include "Ast.hpp"
 #include <stack>
 #include <stdexcept>
+#include <iostream>
 
 Ast::Ast(const std::string &formula)
 {
@@ -44,6 +45,14 @@ Ast::Ast(const std::string &formula)
 bool Ast::eval() const
 {
 	return _root->eval();
+}
+
+void Ast::print() const
+{
+	for (const std::string &s : _root->to_strings())
+	{
+		std::cout << s << std::endl;
+	}
 }
 
 Ast::AstNodePtr Ast::createOperator(char op, AstNodePtr left, AstNodePtr right)

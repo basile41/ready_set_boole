@@ -1,18 +1,23 @@
 #ifndef AST_HPP
-#define AST_HPP
+# define AST_HPP
+
+# include <string>
+# include <memory>
+# include "AstNode.hpp"
 
 class Ast
 {
 public:
-	Ast() {}
-	Ast(const Ast&);
-	~Ast() {}
-	const Ast& operator=(const Ast&);
+	typedef AstNode::AstNodePtr AstNodePtr;
 
-	void print() const;
+	Ast(const std::string &formula);
 
-private:
 	
+	bool eval() const;
+private:
+	static AstNodePtr createOperator(char op, AstNodePtr left, AstNodePtr right = nullptr);
+	static AstNodePtr createValue(bool value);
+	AstNodePtr _root;
 };
 
 #endif /* AST_HPP */

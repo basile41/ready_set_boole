@@ -10,13 +10,14 @@ OBJ_DIRS		=	$(OBJ_PATH)
 
 SRC				=	main.cpp \
 					eval_formula.cpp \
+					AstNode.cpp \
 					Ast.cpp
 
 OBJ				=	$(addprefix $(OBJ_PATH),$(SRC:.cpp=.o))
 DEPS			=	$(addprefix $(OBJ_PATH),$(SRC:.cpp=.d))
 
 CXX				=	c++
-CXXFLAGS		=	-MMD -Wall -Wextra -Werror -std=c++98
+CXXFLAGS		=	-MMD -Wall -Wextra -Werror
 
 all:				$(NAME)
 

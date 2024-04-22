@@ -12,7 +12,7 @@ int main(int argc, char **argv)
 		std::cout << "Error" << std::endl;
 		return 1;
 	}
-	
+
 	std::string formula(argv[1]);
 	bool result = eval_formula(formula);
 	std::cout << "\nresult :" << result << std::endl;

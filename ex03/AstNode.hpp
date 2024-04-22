@@ -33,7 +33,7 @@ public:
 	BinaryOperator(char op, AstNodePtr left, AstNodePtr right);
 	std::vector<std::string> to_strings() const override;
 protected:
-	char op;
+	char _op;
 	AstNodePtr _left;
 	AstNodePtr _right;
 };

@@ -69,7 +69,7 @@ std::vector<std::string> Negation::to_strings() const
 }
 
 BinaryOperator::BinaryOperator(char op, AstNodePtr left, AstNodePtr right)
-: op(op), _left(std::move(left)), _right(std::move(right))
+: _op(op), _left(std::move(left)), _right(std::move(right))
 {
 }
 
@@ -80,7 +80,7 @@ std::vector<std::string> BinaryOperator::to_strings() const
 
 	std::vector<std::string> left = left_branch(left_strings);
 	std::vector<std::string> right = right_branch(right_strings);
-	std::vector<std::string> result = merge_strings(left, right, op);
+	std::vector<std::string> result = merge_strings(left, right, _op);
 
 	return result;
 }

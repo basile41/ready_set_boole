@@ -17,7 +17,7 @@ OBJ				=	$(addprefix $(OBJ_PATH),$(SRC:.cpp=.o))
 DEPS			=	$(addprefix $(OBJ_PATH),$(SRC:.cpp=.d))
 
 CXX				=	g++
-CXXFLAGS		=	-MMD #-Wall -Wextra -Werror -g3
+CXXFLAGS		=	-MMD -Wall -Wextra -Werror -g3
 
 all:				$(NAME)
 

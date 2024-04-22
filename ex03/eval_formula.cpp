@@ -95,15 +95,15 @@ bool check_and_pop(std::stack<char> &s)
 
 bool eval_formula(const std::string &formula)
 {
-	// try
-	// {
+	try
+	{
 		Ast ast(formula);
 		ast.print();
 		return ast.eval();
-	// }
-	// catch(const std::exception& e)
-	// {
-	// 	std::cerr << e.what() << '\n';
-	// }
+	}
+	catch(const std::runtime_error& e)
+	{
+		std::cerr << "Error: " << e.what() << '\n';
+	}
 	return false;
 }

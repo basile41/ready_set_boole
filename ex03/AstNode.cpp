@@ -2,37 +2,11 @@
 #include <iostream>
 #include <algorithm>
 
-Negation::Negation(AstNodePtr node)
-: _node(std::move(node))
-{
-}
-
-bool Negation::eval() const
-{
-	return !_node->eval();
-}
-
-std::vector<std::string> Negation::to_strings() const
-{
-	std::vector<std::string> node = _node->to_strings();
-	std::vector<std::string> result;
-	for (const std::string &n: node)
-	{
-		result.push_back("!" + n);
-	}
-	return result;
-}
-
-BinaryOperator::BinaryOperator(char op, AstNodePtr left, AstNodePtr right)
-: op(op), _left(std::move(left)), _right(std::move(right))
-{
-}
-
 static std::vector<std::string> left_branch(const std::vector<std::string> &left_strings)
 {
 	std::vector<std::string> left;
-	size_t size = left_strings[0].size() / 2;
-	std::string spaces(left_strings.size(), ' ');
+	size_t size = std::find_if_not(left_strings[0].rbegin(), left_strings[0].rend(), isspace) - left_strings[0].rbegin();
+	std::string spaces(left_strings[0].size() - size, ' ');
 
 	for (size_t i = 0; i <= size; i++)
 		left.push_back(spaces + std::string(size - i, ' ') + '/' + std::string(i, ' '));
@@ -45,7 +19,7 @@ static std::vector<std::string> right_branch(const std::vector<std::string> &rig
 {
 	std::vector<std::string> right;
 	size_t size = std::find_if_not(right_strings[0].begin(), right_strings[0].end(), isspace) - right_strings[0].begin();
-	std::string spaces(right_strings.size(), ' ');
+	std::string spaces(right_strings[0].size() - size, ' ');
 
 	for (size_t i = 0; i <= size; i++)
 		right.push_back(std::string(i, ' ') + "\\" + std::string(size - i, ' ') + spaces);
@@ -74,6 +48,29 @@ static std::vector<std::string> merge_strings(const std::vector<std::string> &le
 		result.push_back(line);
 	}
 	return result;
+}
+
+Negation::Negation(AstNodePtr node)
+: _node(std::move(node))
+{
+}
+
+bool Negation::eval() const
+{
+	return !_node->eval();
+}
+
+std::vector<std::string> Negation::to_strings() const
+{
+	std::vector<std::string> right_strings = _node->to_strings();
+	std::vector<std::string> right = right_branch(right_strings);
+	std::vector<std::string> result = merge_strings({""}, right, '!');
+	return result;
+}
+
+BinaryOperator::BinaryOperator(char op, AstNodePtr left, AstNodePtr right)
+: op(op), _left(std::move(left)), _right(std::move(right))
+{
 }
 
 std::vector<std::string> BinaryOperator::to_strings() const

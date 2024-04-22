@@ -28,10 +28,37 @@ BinaryOperator::BinaryOperator(char op, AstNodePtr left, AstNodePtr right)
 {
 }
 
-static std::vector<std::string> merge_strings(const std::vector<std::string> &left, const std::vector<std::string> &right)
+static std::vector<std::string> left_branch(const std::vector<std::string> &left_strings)
+{
+	std::vector<std::string> left;
+	size_t size = left_strings[0].size() / 2;
+	std::string spaces(left_strings.size(), ' ');
+
+	for (size_t i = 0; i <= size; i++)
+		left.push_back(spaces + std::string(size - i, ' ') + '/' + std::string(i, ' '));
+	for (const std::string &l: left_strings)
+		left.push_back(l + " ");
+	return left;
+}
+
+static std::vector<std::string> right_branch(const std::vector<std::string> &right_strings)
+{
+	std::vector<std::string> right;
+	size_t size = std::find_if_not(right_strings[0].begin(), right_strings[0].end(), isspace) - right_strings[0].begin();
+	std::string spaces(right_strings.size(), ' ');
+
+	for (size_t i = 0; i <= size; i++)
+		right.push_back(std::string(i, ' ') + "\\" + std::string(size - i, ' ') + spaces);
+	for (const std::string &r: right_strings)
+		right.push_back(" " + r);
+	return right;
+}
+
+static std::vector<std::string> merge_strings(const std::vector<std::string> &left, const std::vector<std::string> &right, char op)
 {
 	std::vector<std::string> result;
 	size_t size_max = std::max(left.size(), right.size());
+	result.push_back(std::string(left[0].size(), ' ') + op + std::string(right[0].size(), ' '));
 	for (size_t i = 0; i < size_max; i++)
 	{
 		std::string line;
@@ -51,29 +78,12 @@ static std::vector<std::string> merge_strings(const std::vector<std::string> &le
 
 std::vector<std::string> BinaryOperator::to_strings() const
 {
-	std::vector<std::string> left;
-	std::vector<std::string> right;
-	std::vector<std::string> result;
-
 	const std::vector<std::string> left_strings = _left->to_strings();
 	const std::vector<std::string> right_strings = _right->to_strings();
-	size_t left_size = left_strings[0].size() / 2;
-	size_t right_size = std::find_if_not(right_strings[0].begin(), right_strings[0].end(), isspace) - right_strings[0].begin();
 
-
-	std::string spaces(left_strings.size(), ' ');
-	// std::cerr << "spaces.size() = " << spaces.size() << std::endl;
-	for (size_t i = 0; i <= left_size; i++)
-		left.push_back(spaces + std::string(left_size - i, ' ') + '/' + std::string(i, ' '));
-	for (const std::string &l: left_strings)
-		left.push_back(l + " ");
-	right_size = std::find_if_not(right_strings[0].begin(), right_strings[0].end(), isspace) - right_strings[0].begin();
-	spaces = std::string(right_strings.size(), ' ');
-	for (size_t i = 0; i <= right_size; i++)
-		right.push_back(std::string(i, ' ') + "\\" + std::string(right_size - i, ' ') + spaces);
-	for (const std::string &r: right_strings)
-		right.push_back(" " + r);
-	result = merge_strings(left, right);
+	std::vector<std::string> left = left_branch(left_strings);
+	std::vector<std::string> right = right_branch(right_strings);
+	std::vector<std::string> result = merge_strings(left, right, op);
 
 	return result;
 }

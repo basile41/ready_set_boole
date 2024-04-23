@@ -117,3 +117,31 @@ Ast::BoolPtr Ast::getVariable(char name)
 	}
 	return it->second;
 }
+
+void Ast::printTruthTable() const
+{
+	std::map<char, bool> saved_values;
+	std::vector<char> vars;
+
+	for (const auto &var : _variables)
+	{
+		saved_values[var.first] = *var.second;
+		vars.push_back(var.first);
+		*var.second = false;
+		std::cout << "| " << var.first << " ";
+	}
+	std::cout << "| = |\n|---|---|---|---|" << std::endl;
+
+	for (int i = 0; i < (1 << vars.size()); i++)
+	{
+		for (size_t j = 0; j < vars.size(); j++)
+		{
+			bool value = i >> (vars.size() - 1 - j) & 1;
+			auto it = _variables.find(vars[j]);
+			*it->second = value;
+			std::cout << "| " << value << " ";
+		}
+		std::cout << "| " << eval() << " |" << std::endl;
+	}
+
+}

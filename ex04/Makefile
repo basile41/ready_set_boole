@@ -1,5 +1,5 @@
 
-NAME			=	boolean_evaluation
+NAME			=	truth_table
 
 INC				=	-I .
 
@@ -9,7 +9,7 @@ OBJ_PATH		=	./obj/
 OBJ_DIRS		=	$(OBJ_PATH)
 
 SRC				=	main.cpp \
-					eval_formula.cpp \
+					print_truth_table.cpp \
 					AstNode.cpp \
 					Ast.cpp
 

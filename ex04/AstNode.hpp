@@ -1,3 +1,5 @@
+#ifndef B4911E9D_A3C3_4F3E_A420_5476A73C8582
+#define B4911E9D_A3C3_4F3E_A420_5476A73C8582
 
 #ifndef ASTNODE_HPP
 #define ASTNODE_HPP
@@ -10,7 +12,6 @@ class AstNode
 {
 public:
 	typedef std::unique_ptr<AstNode> AstNodePtr;
-
 
 	virtual ~AstNode() = default;
 	virtual bool eval() const = 0;
@@ -79,8 +80,24 @@ public:
 	Value(bool value);
 	bool eval() const override;
 	std::vector<std::string> to_strings() const override;
-private:
+protected:
 	bool _value;
 };
 
+class Variable : public AstNode
+{
+public:
+	typedef std::shared_ptr<bool> VarPtr;
+
+	Variable(char name, VarPtr var);
+	bool eval() const override;
+	std::vector<std::string> to_strings() const override;
+private:
+	char _name;
+	VarPtr _var;
+};
+
 #endif /* ASTNODE_HPP */
+
+
+#endif /* B4911E9D_A3C3_4F3E_A420_5476A73C8582 */

@@ -130,7 +130,10 @@ void Ast::printTruthTable() const
 		*var.second = false;
 		std::cout << "| " << var.first << " ";
 	}
-	std::cout << "| = |\n|---|---|---|---|" << std::endl;
+	std::cout << "| = |\n";
+	for (size_t i = 0; i < vars.size(); i++)
+		std::cout << "|---";
+	std::cout << "|---|" << std::endl;
 
 	for (int i = 0; i < (1 << vars.size()); i++)
 	{

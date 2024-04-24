@@ -1,5 +1,3 @@
-#ifndef C74CC624_B17C_4B10_A21B_34FC3082DF6F
-#define C74CC624_B17C_4B10_A21B_34FC3082DF6F
 #ifndef AST_HPP
 # define AST_HPP
 
@@ -33,6 +31,3 @@ private:
 };
 
 #endif /* AST_HPP */
-
-
-#endif /* C74CC624_B17C_4B10_A21B_34FC3082DF6F */

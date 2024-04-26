@@ -68,6 +68,22 @@ std::vector<std::string> Negation::to_strings() const
 	return result;
 }
 
+AstNode::AstNodePtr Negation::transform()
+{
+	AstNodePtr new_node = _node->transform();
+	while (new_node)
+	{
+		_node = std::move(new_node);
+		new_node = _node->transform();
+	}
+	// si _node est un Negation, on retourne son noeud interne
+	if (Negation *neg = dynamic_cast<Negation*>(_node.get()))
+	{
+		return std::move(neg->_node);
+	}
+	return nullptr;
+}
+
 BinaryOperator::BinaryOperator(char op, AstNodePtr left, AstNodePtr right)
 : _op(op), _left(std::move(left)), _right(std::move(right))
 {
@@ -138,4 +154,30 @@ bool Variable::eval() const
 std::vector<std::string> Variable::to_strings() const
 {
 	return std::vector<std::string>{std::string(1, _name)};
+}
+
+AstNode::AstNodePtr BinaryOperator::transform()
+{
+	AstNodePtr new_left = _left->transform();
+	AstNodePtr new_right = _right->transform();
+	while (new_left || new_right)
+	{
+		if (new_left)
+			_left = std::move(new_left);
+		if (new_right)
+			_right = std::move(new_right);
+		new_left = _left->transform();
+		new_right = _right->transform();
+	}
+	return nullptr;
+}
+
+AstNode::AstNodePtr Value::transform()
+{
+	return nullptr;
+}
+
+AstNode::AstNodePtr Variable::transform()
+{
+	return nullptr;
 }

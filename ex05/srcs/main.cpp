@@ -3,7 +3,7 @@
 #include <bitset>
 #include <stdio.h>
 
-void print_truth_table(const std::string &formula);
+bool print_truth_table(const std::string &formula);
 
 int main(int argc, char **argv)
 {
@@ -14,5 +14,6 @@ int main(int argc, char **argv)
 	}
 
 	std::string formula(argv[1]);
-	print_truth_table(formula);
+	bool result = print_truth_table(formula);
+	std::cout << "\nresult :" << result << std::endl;
 }

@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 
+// Base class for all nodes in the AST
+
 class AstNode
 {
 public:
@@ -14,7 +16,15 @@ public:
 	virtual bool eval() const = 0;
 	virtual std::vector<std::string> to_strings() const = 0;
 	virtual AstNodePtr transform() = 0;
+protected:
+	std::vector<std::string> left_branch(const std::vector<std::string> &left_strings) const;
+	std::vector<std::string> right_branch(const std::vector<std::string> &right_strings) const;
+	std::vector<std::string> merge_strings(const std::vector<std::string> &left, const std::vector<std::string> &right, char op) const;
 };
+
+// Derived classes for each type of node in the AST
+
+	// Unary operators
 
 class Negation : public AstNode
 {
@@ -26,6 +36,8 @@ public:
 private:
 	AstNodePtr _node;
 };
+
+	// Binary operators
 
 class BinaryOperator : public AstNode
 {
@@ -74,6 +86,8 @@ public:
 	using BinaryOperator::BinaryOperator;
 	bool eval() const override;
 };
+
+	// Leaf nodes
 
 class Value : public AstNode
 {

@@ -22,7 +22,7 @@ SILENT			=	--no-print-directory
 
 SRCS_PATH		=	srcs/
 OBJS_PATH		=	objs/
-SRCS_AST		=	ast/
+SRCS_AST		=	AstNode/
 
 #############################################################################
 #																			#
@@ -30,11 +30,20 @@ SRCS_AST		=	ast/
 #																			#
 #############################################################################
 
-SRCS				=	main.cpp \
-						print_truth_table.cpp \
-						$(addprefix $(SRCS_AST),	\
-							AstNode.cpp 		\
-							Ast.cpp 			\
+SRCS				=	main.cpp 				\
+						print_truth_table.cpp	\
+						Ast.cpp 				\
+						$(addprefix $(SRCS_AST),		\
+							AstNode.cpp 				\
+							Negation.cpp 				\
+							BinaryOperator.cpp			\
+							Conjunction.cpp				\
+							Disjunction.cpp				\
+							ExclusiveDisjunction.cpp	\
+							LogicalEquivalence.cpp		\
+							MaterialCondition.cpp		\
+							Value.cpp					\
+							Variable.cpp				\
 						)
 					
 

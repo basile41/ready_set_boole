@@ -78,6 +78,7 @@ class MaterialCondition : public BinaryOperator
 public:
 	using BinaryOperator::BinaryOperator;
 	bool eval() const override;
+	AstNodePtr transform() override;
 };
 
 class LogicalEquivalence : public BinaryOperator

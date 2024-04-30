@@ -18,27 +18,29 @@ Ast::Ast(const std::string &formula)
 		else
 		{
 			if (nodes_stack.size() < 1)
-				throw std::runtime_error("Invalid formula (empty stack)");
+				throw std::runtime_error("Invalid formula (unexpected character)");
 			AstNodePtr right = std::move(nodes_stack.top());
 			nodes_stack.pop();
 			if (c == '!')
 			{
-				nodes_stack.push(createOperator(c, std::move(right)));
+				AstNodePtr operator_node = createOperator(c, std::move(right));
+				nodes_stack.push(std::move(operator_node));
 			}
 			else
 			{
 				if (nodes_stack.size() < 1)
-					throw std::runtime_error("Invalid formula (empty stack)");
+					throw std::runtime_error("Invalid formula (unexpected character)");
 				AstNodePtr left = std::move(nodes_stack.top());
 				nodes_stack.pop();
-				nodes_stack.push(createOperator(c, std::move(left), std::move(right)));
+				AstNodePtr operator_node = createOperator(c, std::move(left), std::move(right));
+				nodes_stack.push(std::move(operator_node));
 			}
 		}
 	}
 	if (nodes_stack.size() == 1)
 		_root = std::move(nodes_stack.top());
 	else
-		throw std::runtime_error("Invalid formula (stack size)");
+		throw std::runtime_error("Invalid formula (too many operands)");
 	
 }
 

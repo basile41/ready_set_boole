@@ -8,7 +8,7 @@
 class AstNode
 {
 public:
-	typedef std::unique_ptr<AstNode> AstNodePtr;
+	typedef std::shared_ptr<AstNode> AstNodePtr;
 
 	virtual ~AstNode() = default;
 	virtual bool eval() const = 0;

@@ -10,7 +10,7 @@
 class AstNode
 {
 public:
-	typedef std::unique_ptr<AstNode> AstNodePtr;
+	typedef std::shared_ptr<AstNode> AstNodePtr;
 
 	virtual ~AstNode() = default;
 	virtual bool eval() const = 0;
@@ -78,7 +78,7 @@ class MaterialCondition : public BinaryOperator
 public:
 	using BinaryOperator::BinaryOperator;
 	bool eval() const override;
-	AstNodePtr transform() override;
+	// AstNodePtr transform() override;
 };
 
 class LogicalEquivalence : public BinaryOperator

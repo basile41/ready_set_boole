@@ -62,17 +62,17 @@ Ast::AstNodePtr Ast::createOperator(char op, AstNodePtr left, AstNodePtr right)
 	switch (op)
 	{
 		case '!':
-			return std::make_unique<Negation>(std::move(left));
+			return std::make_shared<Negation>(std::move(left));
 		case '&':
-			return std::make_unique<Conjunction>(op, std::move(left), std::move(right));
+			return std::make_shared<Conjunction>(op, std::move(left), std::move(right));
 		case '|':
-			return std::make_unique<Disjunction>(op, std::move(left), std::move(right));
+			return std::make_shared<Disjunction>(op, std::move(left), std::move(right));
 		case '^':
-			return std::make_unique<ExclusiveDisjunction>(op, std::move(left), std::move(right));
+			return std::make_shared<ExclusiveDisjunction>(op, std::move(left), std::move(right));
 		case '>':
-			return std::make_unique<MaterialCondition>(op, std::move(left), std::move(right));
+			return std::make_shared<MaterialCondition>(op, std::move(left), std::move(right));
 		case '=':
-			return std::make_unique<LogicalEquivalence>(op, std::move(left), std::move(right));
+			return std::make_shared<LogicalEquivalence>(op, std::move(left), std::move(right));
 		default:
 			throw std::runtime_error("Invalid character");
 	}
@@ -80,5 +80,5 @@ Ast::AstNodePtr Ast::createOperator(char op, AstNodePtr left, AstNodePtr right)
 
 Ast::AstNodePtr Ast::createValue(bool value)
 {
-	return std::make_unique<Value>(value);
+	return std::make_shared<Value>(value);
 }

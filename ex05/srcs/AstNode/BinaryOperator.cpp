@@ -32,3 +32,8 @@ AstNode::AstNodePtr BinaryOperator::transform()
 	}
 	return nullptr;
 }
+
+std::string BinaryOperator::toRPN() const
+{
+	return _left->toRPN() + _right->toRPN() + _op;
+}

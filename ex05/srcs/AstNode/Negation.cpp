@@ -33,3 +33,8 @@ AstNode::AstNodePtr Negation::transform()
 	}
 	return nullptr;
 }
+
+std::string Negation::toRPN() const
+{
+	return _node->toRPN() + "!";
+}

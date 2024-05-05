@@ -16,6 +16,7 @@ public:
 	virtual bool eval() const = 0;
 	virtual std::vector<std::string> to_strings() const = 0;
 	virtual AstNodePtr transform() = 0;
+	virtual std::string toRPN() const = 0;
 protected:
 	std::vector<std::string> left_branch(const std::vector<std::string> &left_strings) const;
 	std::vector<std::string> right_branch(const std::vector<std::string> &right_strings) const;
@@ -33,6 +34,7 @@ public:
 	bool eval() const override;
 	std::vector<std::string> to_strings() const override;
 	AstNodePtr transform() override;
+	std::string toRPN() const override;
 private:
 	AstNodePtr _node;
 };
@@ -45,6 +47,7 @@ public:
 	BinaryOperator(char op, AstNodePtr left, AstNodePtr right);
 	std::vector<std::string> to_strings() const override;
 	AstNodePtr transform() override;
+	std::string toRPN() const override;
 
 protected:
 	char _op;
@@ -78,7 +81,7 @@ class MaterialCondition : public BinaryOperator
 public:
 	using BinaryOperator::BinaryOperator;
 	bool eval() const override;
-	// AstNodePtr transform() override;
+	AstNodePtr transform() override;
 };
 
 class LogicalEquivalence : public BinaryOperator
@@ -97,6 +100,7 @@ public:
 	bool eval() const override;
 	std::vector<std::string> to_strings() const override;
 	AstNodePtr transform() override;
+	std::string toRPN() const override;
 protected:
 	bool _value;
 };
@@ -110,6 +114,7 @@ public:
 	bool eval() const override;
 	std::vector<std::string> to_strings() const override;
 	AstNodePtr transform() override;
+	std::string toRPN() const override;
 private:
 	char _name;
 	VarPtr _var;

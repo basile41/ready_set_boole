@@ -153,3 +153,8 @@ void Ast::printTruthTable() const
 	}
 
 }
+
+std::string Ast::toRPN() const
+{
+	return _root->toRPN();
+}

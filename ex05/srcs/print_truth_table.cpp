@@ -10,6 +10,7 @@ void print_truth_table(const std::string &formula)
 		ast.print();
 		std::cout << std::endl;
 		ast.printTruthTable();
+		std::cout << ast.toRPN() << std::endl;
 	}
 	catch(const std::runtime_error& e)
 	{

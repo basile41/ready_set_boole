@@ -18,6 +18,7 @@ public:
 	bool eval() const;
 	void print() const;
 	void printTruthTable() const;
+	std::string toRPN() const;
 
 	BoolPtr setVariable(char var, bool value = false);
 	BoolPtr getVariable(char var);

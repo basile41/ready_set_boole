@@ -19,3 +19,8 @@ AstNode::AstNodePtr Value::transform()
 {
 	return nullptr;
 }
+
+std::string Value::toRPN() const
+{
+	return _value ? "1" : "0";
+}

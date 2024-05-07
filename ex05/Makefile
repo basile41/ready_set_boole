@@ -31,7 +31,7 @@ SRCS_AST		=	AstNode/
 #############################################################################
 
 SRCS				=	main.cpp 				\
-						print_truth_table.cpp	\
+						negation_normal_form.cpp	\
 						Ast.cpp 				\
 						$(addprefix $(SRCS_AST),		\
 							AstNode.cpp 				\

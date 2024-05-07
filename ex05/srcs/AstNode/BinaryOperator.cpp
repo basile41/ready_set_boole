@@ -21,13 +21,15 @@ AstNode::AstNodePtr BinaryOperator::transform()
 {
 	AstNodePtr new_left = _left->transform();
 	AstNodePtr new_right = _right->transform();
-	while (new_left || new_right)
+	
+	while (new_left)
 	{
-		if (new_left)
-			_left = std::move(new_left);
-		if (new_right)
-			_right = std::move(new_right);
+		_left = new_left;
 		new_left = _left->transform();
+	}
+	while (new_right)
+	{
+		_right = new_right;
 		new_right = _right->transform();
 	}
 	return nullptr;
@@ -36,4 +38,14 @@ AstNode::AstNodePtr BinaryOperator::transform()
 std::string BinaryOperator::toRPN() const
 {
 	return _left->toRPN() + _right->toRPN() + _op;
+}
+
+AstNode::AstNodePtr BinaryOperator::getLeft() const
+{
+	return _left;
+}
+
+AstNode::AstNodePtr BinaryOperator::getRight() const
+{
+	return _right;
 }

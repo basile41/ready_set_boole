@@ -1,4 +1,5 @@
 # include "AstNode.hpp"
+#include <iostream>
 
 Negation::Negation(AstNodePtr node)
 : _node(std::move(node))
@@ -26,10 +27,21 @@ AstNode::AstNodePtr Negation::transform()
 		_node = std::move(new_node);
 		new_node = _node->transform();
 	}
-	// si _node est un Negation, on retourne son noeud interne
 	if (Negation *neg = dynamic_cast<Negation*>(_node.get()))
 	{
-		return std::move(neg->_node);
+		return neg->_node;
+	}
+	if (Conjunction *conj = dynamic_cast<Conjunction*>(_node.get()))
+	{
+		AstNodePtr new_left = std::make_shared<Negation>(conj->getLeft());
+		AstNodePtr new_right = std::make_shared<Negation>(conj->getRight());
+		return std::make_shared<Disjunction>('|', std::move(new_left), std::move(new_right));
+	}
+	if (Disjunction *disj = dynamic_cast<Disjunction*>(_node.get()))
+	{
+		AstNodePtr new_left = std::make_shared<Negation>(disj->getLeft());
+		AstNodePtr new_right = std::make_shared<Negation>(disj->getRight());
+		return std::make_shared<Conjunction>('&', std::move(new_left), std::move(new_right));
 	}
 	return nullptr;
 }

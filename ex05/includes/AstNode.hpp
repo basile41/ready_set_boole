@@ -49,6 +49,9 @@ public:
 	AstNodePtr transform() override;
 	std::string toRPN() const override;
 
+	AstNodePtr getLeft() const;
+	AstNodePtr getRight() const;
+
 protected:
 	char _op;
 	AstNodePtr _left;
@@ -74,6 +77,7 @@ class ExclusiveDisjunction : public BinaryOperator
 public:
 	using BinaryOperator::BinaryOperator;
 	bool eval() const override;
+	AstNodePtr transform() override;
 };
 
 class MaterialCondition : public BinaryOperator
@@ -89,6 +93,7 @@ class LogicalEquivalence : public BinaryOperator
 public:
 	using BinaryOperator::BinaryOperator;
 	bool eval() const override;
+	AstNodePtr transform() override;
 };
 
 	// Leaf nodes
